@@ -1,124 +1,96 @@
+<<<<<<< HEAD
 # Personal & Family Finance Management Application
 
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=for-the-badge&logo=alpine.js&logoColor=black)
 
-A modern web application for managing personal and family finances collaboratively. Track income, expenses, create budgets, and achieve your financial goals together. Built with the TALL Stack (Tailwind, Alpine.js, Laravel, Livewire - *although this project uses Blade+Alpine.js*).
+# Personal Finance Management (PFM) Web Application
 
-This application is designed with a clean interface, an elegant dark theme, and a reactive user experience.
+![Banner PFM](assets/pfm-banner.jpg) Ini adalah proyek web aplikasi Manajemen Keuangan Pribadi (PFM) yang sederhana, intuitif, dan *user-friendly* yang dirancang untuk membantu individu dan keluarga mengelola keuangan mereka secara efektif.
 
----
+## Fitur Utama
 
-## 🌟 Key Features
+-   **Dashboard Interaktif:** Ikhtisar visual pendapatan, pengeluaran, dan saldo yang dapat disesuaikan.
+-   **Manajemen Transaksi:** Catat, kategorikan, dan lacak transaksi dengan mudah.
+-   **Kategori Kustom:** Buat kategori pendapatan dan pengeluaran yang dipersonalisasi.
+-   **Laporan & Analisis:** Visualisasikan tren keuangan dengan grafik dan laporan.
+-   **Anggaran:** Tetapkan dan pantau anggaran untuk berbagai kategori.
+-   **Family Space:** Fitur kolaborasi untuk mengelola keuangan keluarga bersama.
+-   **Keamanan:** Autentikasi pengguna dan perlindungan data.
 
-Here are some of the key features in this application:
+## Tampilan Proyek (Screenshots)
 
-*   **Interactive Dashboard**: Visualize your financial health at a glance.
-    *   Monthly income & expense summary chart.
-    *   List of recent transactions.
-    *   Top spending categories.
-    *   Monthly budget progress.
+Berikut adalah beberapa tampilan dari aplikasi PFM:
 
-*   **Transaction Management**: Easily record every transaction.
-    *   CRUD (Create, Read, Update, Delete) for transactions.
-    *   Transaction types: Income, Expense, and Transfer between accounts.
-    *   Flexible transaction categorization.
+### Dashboard
+![Tampilan Dashboard PFM](assets/dashboard.jpg)
 
-*   **Account Management**: Manage all your funding sources.
-    *   Create personal accounts (Savings, Wallet, Credit Card, etc.).
-    *   View total balance and balance per account.
+### Fitur Family Space
+![Tampilan Fitur Family Spaces](assets/family_spaces.jpg)
 
-*   **Monthly Budgeting**: Control your spending.
-    *   Set monthly budget limits for each category.
-    *   Visually track spending progress against the budget.
+## Teknologi yang Digunakan
 
-*   **Financial Goals**: Realize your financial dreams.
-    *   Create savings targets (e.g., "Vacation Fund", "New Laptop").
-    *   Allocate savings from transactions to specific goals.
+-   **Backend:** PHP (Laravel 11)
+-   **Frontend:** Tailwind CSS, Alpine.js
+-   **Database:** MySQL (melalui XAMPP)
+-   **Versi PHP yang disarankan:** 8.2 atau lebih tinggi
 
-*   **✨ Highlight Feature: Family Space**
-    *   **Collaborative Finance**: Create or join a "Family Space" to manage finances together.
-    *   **Invite Members**: Invite other family members via email.
-    *   **Role Management**: Assign roles as `Admin` or `Member` to control access rights.
-    *   **Joint Accounts**: Create accounts that can be accessed and managed jointly by all family members.
+## Persyaratan Sistem
 
-*   **Notifications**: Stay up-to-date with important activities like invitations to a Family Space.
+-   Web server (Apache/Nginx)
+-   PHP 8.2+
+-   MySQL Database
+-   Composer
+-   Node.js & NPM/Yarn (untuk aset frontend)
 
-*   **AI Assistant**: A floating component for future interactions (conceptual feature).
+## Panduan Instalasi (Lokal)
 
-## 🛠️ Technology Stack
+Ikuti langkah-langkah di bawah ini untuk menjalankan proyek secara lokal:
 
-*   **Backend**: Laravel 11
-*   **Frontend**:
-    *   Blade
-    *   Tailwind CSS
-    *   Alpine.js
-*   **Database**: MySQL / PostgreSQL (configurable)
-*   **Build Tool**: Vite
-
-## 🚀 Installation & Local Setup
-
-Follow these steps to run this project in your local environment.
-
-1.  **Clone repository:**
+1.  **Clone repositori:**
     ```bash
-    git clone https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA.git
-    cd NAMA_REPO_ANDA
+    git clone [https://github.com/jayabaya-studio/pfm-finance-app.git](https://github.com/jayabaya-studio/pfm-finance-app.git)
+    cd pfm-finance-app
     ```
-
-2.  **Install PHP dependencies:**
+2.  **Instal dependensi Composer:**
     ```bash
     composer install
     ```
-
-3.  **Create the environment file:**
+3.  **Buat file .env dan generate app key:**
     ```bash
     cp .env.example .env
-    ```
-
-4.  **Generate application key:**
-    ```bash
     php artisan key:generate
     ```
-
-5.  **Configure the database:**
-    Open the `.env` file and adjust your database settings (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
-
-6.  **Run database migrations:**
-    This command will create all the necessary tables in your database.
+4.  **Konfigurasi database:**
+    Buka file `.env` dan konfigurasikan detail database Anda (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
+5.  **Jalankan migrasi database:**
     ```bash
     php artisan migrate
     ```
-    *Optional: If there are seeders, run `php artisan migrate --seed`.*
-
-7.  **Install JavaScript dependencies:**
+6.  **Instal dependensi Node.js & Compile aset frontend:**
     ```bash
     npm install
+    npm run dev  # atau npm run build untuk produksi
     ```
-
-8.  **Compile frontend assets:**
-    Run the Vite development server.
-    ```bash
-    npm run dev
-    ```
-
-9.  **Run the Laravel development server:**
-    Open a new terminal and run the following command.
+7.  **Jalankan server pengembangan Laravel:**
     ```bash
     php artisan serve
     ```
+    Aplikasi akan tersedia di `http://127.0.0.1:8000`.
 
-10. **Done!**
-    The application is now running at `http://127.0.0.1:8000`. You can register a new account to get started.
+## Kontribusi
 
-## ❤️ Supporting This Project
+Kontribusi disambut baik! Jika Anda menemukan bug atau memiliki saran fitur, silakan buka masalah atau kirim *pull request*.
 
-If you find this project useful, if it helps your portfolio, or if you just want to appreciate the hard work, you can show your support by buying me a coffee. Every bit of support is greatly appreciated!
+## Lisensi
 
-<a href="https://www.buymeacoffee.com/NAMA_ANDA" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-<a href="https://saweria.co/NAMA_ANDA" target="_blank"><img src="https://user-images.githubusercontent.com/24270415/199109032-b3558c3d-737c-41a1-a88c-2333904396b2.png" alt="Saweria" style="height: 60px !important;"></a>
+Proyek ini dilisensikan di bawah Lisensi MIT. Lihat file `LICENSE` untuk detail lebih lanjut.
 
-## 📄 License
+## Dukungan Proyek
 
-This project is licensed under the MIT License.
+Jika proyek ini membantu Anda, Anda dapat mempertimbangkan untuk mendukungnya:
+-   Beli saya kopi: [https://www.buymeacoffee.com/fathurrochim)
+
+---
+*Dibuat dengan ❤️ oleh Fathur Rochim*
