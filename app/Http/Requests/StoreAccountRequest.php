@@ -20,9 +20,6 @@ class StoreAccountRequest extends FormRequest
         ];
     }
 
-    /**
-     * Pesan kesalahan kustom untuk aturan validasi.
-     */
     public function messages(): array
     {
         return [

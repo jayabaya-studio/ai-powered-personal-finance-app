@@ -13,30 +13,16 @@ class BudgetWarningNotification extends Notification
 
     protected $budgetName;
 
-    /**
-     * Create a new notification instance.
-     */
     public function __construct(string $budgetName)
     {
         $this->budgetName = $budgetName;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
-        // We only want to store this in the database for now
         return ['database'];
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(object $notifiable): array
     {
         return [

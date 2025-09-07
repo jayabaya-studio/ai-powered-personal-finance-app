@@ -15,9 +15,7 @@ class EnsureUserHasRole
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        // Cek jika pengguna tidak login atau tidak memiliki peran yang dibutuhkan
         if (! $request->user() || ! $request->user()->hasRole($role)) {
-            // Jika tidak, tolak akses
             abort(403, 'THIS ACTION IS UNAUTHORIZED.');
         }
 

@@ -5,28 +5,19 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\Family; // Impor model Family
+use App\Models\Family;
 
 class InviteFamilyMemberRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
-        // Hanya owner atau admin dari Family Space yang bisa mengundang anggota
-        $family = $this->route('family'); // Ambil family dari route model binding
+        $family = $this->route('family');
         return auth()->check() && (auth()->user()->id === $family->owner_user_id || auth()->user()->role === 'admin');
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
-        // Asumsi kita mengundang berdasarkan email
         $familyId = $this->route('family')->id;
 
         return [
@@ -35,23 +26,16 @@ class InviteFamilyMemberRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
-                'exists:users,email', // Pastikan email terdaftar sebagai user
-                // Pastikan user belum menjadi anggota dari family space ini
+                'exists:users,email',
                 Rule::unique('family_space_user')->where(function ($query) use ($familyId) {
                     return $query->where('family_space_id', $familyId);
                 }),
-                // Pastikan user yang diundang bukan user yang sedang login itu sendiri
                 Rule::notIn([auth()->user()->email]),
             ],
-            'role' => ['nullable', 'string', Rule::in(['member', 'admin'])], // Bisa diatur sebagai member atau admin
+            'role' => ['nullable', 'string', Rule::in(['member', 'admin'])],
         ];
     }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array<string, string>
-     */
     public function messages(): array
     {
         return [

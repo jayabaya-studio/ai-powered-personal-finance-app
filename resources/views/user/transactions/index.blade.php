@@ -1,12 +1,3 @@
-<?php
-// File: resources/views/user/transactions/index.blade.php
-
-// This file now acts as the central hub for transaction management.
-// It uses Alpine.js with a transactionsManager() function to handle all state,
-// including modal visibility and form data.
-
-// Ensure layout is extended
-?>
 @extends('layouts.app')
 
 @section('content')
@@ -155,17 +146,14 @@
 {{-- This is the crucial JavaScript logic that controls everything --}}
 <script>
 function transactionsManager() {
-    // Get old input data from session if present, for form re-population after validation errors
     const oldInput = @json(session()->getOldInput());
     const formErrors = {{ $errors->any() ? 'true' : 'false' }};
     const sessionFormType = '{{ session('form_type') ?? '' }}';
-    const allTransactions = @json($transactions->items()); // Get current page items
+    const allTransactions = @json($transactions->items());
     const firstAccountId = '{{ $accounts->first()->id ?? '' }}';
 
     return {
-        // Alpine.js init function
         init() {
-            // Initial setup for modals based on server-side validation errors or edit_id
             const urlParams = new URLSearchParams(window.location.search);
             const hasEditId = urlParams.has('edit_id');
             const editId = hasEditId ? parseInt(urlParams.get('edit_id')) : null;
@@ -175,7 +163,6 @@ function transactionsManager() {
                 if (transactionToEdit) {
                     this.openEditModal(transactionToEdit);
                 } else if (formErrors && sessionFormType === 'edit_transaction') {
-                    // Fallback: If transaction object isn't found but there are edit errors, use oldInput to populate
                     this.openEditModal(oldInput);
                 }
             } else if (formErrors && sessionFormType === 'add_transaction') {
@@ -183,11 +170,9 @@ function transactionsManager() {
             }
         },
 
-        // State to control modal visibility
         showFormModal: false,
         showDeleteModal: false,
 
-        // State for form data. All inputs will be bound to this.
         formState: {
             id: null,
             type: 'expense',
@@ -195,21 +180,18 @@ function transactionsManager() {
             category_id: '',
             amount: '',
             description: '',
-            transaction_date: new Date().toISOString().slice(0, 16), // datetime-local needs YYYY-MM-DDTHH:MM
+            transaction_date: new Date().toISOString().slice(0, 16),
             transfer_to_account_id: null,
-            goal_id: '', // NEW: Add goal_id to formState
+            goal_id: '',
         },
 
-        // State for delete confirmation
         deleteState: {
             id: null,
             description: '',
             actionUrl: ''
         },
 
-        // Function to open 'Add' modal
         openAddModal() {
-            // Reset formState to initial/empty conditions
             this.formState = {
                 id: null,
                 type: 'expense',
@@ -219,13 +201,12 @@ function transactionsManager() {
                 description: '',
                 transaction_date: new Date().toISOString().slice(0, 16),
                 transfer_to_account_id: null,
-                goal_id: '', // Reset goal_id
+                goal_id: '',
             };
 
-            // If there were validation errors for an add form, re-populate from old input
             if (formErrors && sessionFormType === 'add_transaction') {
                 this.formState = {
-                    ...this.formState, // Keep defaults for fields not in oldInput
+                    ...this.formState,
                     id: oldInput.id || null,
                     type: oldInput.type || 'expense',
                     account_id: oldInput.account_id || firstAccountId,
@@ -234,15 +215,13 @@ function transactionsManager() {
                     description: oldInput.description || '',
                     transaction_date: oldInput.transaction_date || new Date().toISOString().slice(0, 16),
                     transfer_to_account_id: oldInput.transfer_to_account_id || null,
-                    goal_id: oldInput.goal_id || '', // Populate goal_id from old input
+                    goal_id: oldInput.goal_id || '',
                 };
             }
             this.showFormModal = true;
         },
 
-        // Function to open 'Edit' modal
         openEditModal(transaction) {
-            // Populate formState with data from the selected transaction
             this.formState = {
                 id: transaction.id,
                 type: transaction.type,
@@ -250,17 +229,15 @@ function transactionsManager() {
                 category_id: transaction.category_id,
                 amount: transaction.amount,
                 description: transaction.description,
-                // [FIXED] Handle cases where transaction_date might not exist, preventing a JS error.
                 transaction_date: (transaction.transaction_date || new Date().toISOString()).slice(0, 16),
                 transfer_to_account_id: transaction.transfer_to_account_id,
-                goal_id: transaction.goal_id || '', // Populate goal_id from transaction
+                goal_id: transaction.goal_id || '',
             };
 
-            // If there were validation errors for an edit form, re-populate from old input
             if (formErrors && sessionFormType === 'edit_transaction' && oldInput.id == transaction.id) {
                  this.formState = {
-                    ...this.formState, // Start with transaction data
-                    id: oldInput.id || null, // Ensure ID is kept
+                    ...this.formState,
+                    id: oldInput.id || null,
                     type: oldInput.type || transaction.type,
                     account_id: oldInput.account_id || transaction.account_id,
                     category_id: oldInput.category_id || transaction.category_id,
@@ -268,7 +245,7 @@ function transactionsManager() {
                     description: oldInput.description || transaction.description,
                     transaction_date: oldInput.transaction_date ? oldInput.transaction_date.slice(0,16) : (transaction.transaction_date ? transaction.transaction_date.slice(0,16) : new Date().toISOString().slice(0,16)),
                     transfer_to_account_id: oldInput.transfer_to_account_id || transaction.transfer_to_account_id,
-                    goal_id: oldInput.goal_id || transaction.goal_id || '', // Populate goal_id from old input or transaction
+                    goal_id: oldInput.goal_id || transaction.goal_id || '',
                 };
             }
             this.showFormModal = true;
@@ -282,11 +259,9 @@ function transactionsManager() {
             this.showDeleteModal = true;
         },
 
-        // Function to close all modals and reset states
         closeModals() {
             this.showFormModal = false;
             this.showDeleteModal = false;
-            // Reset formState to ensure clean slate for next add/edit
             this.formState = {
                 id: null,
                 type: 'expense',
@@ -296,7 +271,7 @@ function transactionsManager() {
                 description: '',
                 transaction_date: new Date().toISOString().slice(0, 16),
                 transfer_to_account_id: null,
-                goal_id: '', // Reset goal_id
+                goal_id: '',
             };
             this.deleteState = {
                 id: null,
@@ -304,7 +279,6 @@ function transactionsManager() {
                 actionUrl: ''
             };
 
-            // Clear 'edit_id' URL parameter to prevent modal from reopening automatically
             const url = new URL(window.location.href);
             if (url.searchParams.has('edit_id')) {
                 url.searchParams.delete('edit_id');

@@ -29,15 +29,14 @@ class StoreTransactionRequest extends FormRequest
                 Rule::exists('accounts', 'id')->where(function ($query) {
                     $query->where('user_id', auth()->id());
                 }),
-                'different:account_id', // Must be different from the source account
+                'different:account_id',
             ],
             'goal_id' => [ // New validation rule for goal_id
-                'nullable', // goal_id is optional
-                'sometimes', // Only validate if present in the request
+                'nullable',
+                'sometimes',
                 Rule::exists('goals', 'id')->where(function ($query) {
                     $query->where('user_id', auth()->id());
                 }),
-                // Optionally, add a rule to only allow goals for 'income' transactions
                 Rule::requiredIf(function () {
                     return $this->input('type') === 'income' && !is_null($this->input('goal_id'));
                 }),
@@ -45,9 +44,6 @@ class StoreTransactionRequest extends FormRequest
         ];
     }
 
-    /**
-     * Custom validation messages.
-     */
     public function messages(): array
     {
         return [

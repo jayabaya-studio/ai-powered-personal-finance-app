@@ -1,96 +1,100 @@
-<<<<<<< HEAD
-# Personal & Family Finance Management Application
-
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=for-the-badge&logo=alpine.js&logoColor=black)
 
-# Personal Finance Management (PFM) Web Application
+# AI-Powered Personal Finance Management (PFM) Web Application
 
-![Banner PFM](assets/pfm-banner.jpg) Ini adalah proyek web aplikasi Manajemen Keuangan Pribadi (PFM) yang sederhana, intuitif, dan *user-friendly* yang dirancang untuk membantu individu dan keluarga mengelola keuangan mereka secara efektif.
+This is a simple, intuitive, and user-friendly Personal Finance Management (PFM) web application designed to help individuals and families manage their finances effectively. As a user-centric platform, all features are accessible after creating an account, providing a secure and personalized environment for your financial data.
 
-## Fitur Utama
+## Key Features
 
--   **Dashboard Interaktif:** Ikhtisar visual pendapatan, pengeluaran, dan saldo yang dapat disesuaikan.
--   **Manajemen Transaksi:** Catat, kategorikan, dan lacak transaksi dengan mudah.
--   **Kategori Kustom:** Buat kategori pendapatan dan pengeluaran yang dipersonalisasi.
--   **Laporan & Analisis:** Visualisasikan tren keuangan dengan grafik dan laporan.
--   **Anggaran:** Tetapkan dan pantau anggaran untuk berbagai kategori.
--   **Family Space:** Fitur kolaborasi untuk mengelola keuangan keluarga bersama.
--   **Keamanan:** Autentikasi pengguna dan perlindungan data.
+-   **Interactive Dashboard:** A customizable visual overview of your income, expenses, and balance.
+-   **Transaction Management:** Easily record, categorize, and track your transactions.
+-   **Custom Categories:** Create personalized income and expense categories.
+-   **Reports & Analysis:** Visualize financial trends with charts and reports.
+-   **Budgeting:** Set and monitor budgets for various categories.
+-   **Family Space:** A collaborative feature to manage family finances together.
+-   **Gemini AI Integration:** Engage in conversations about your finances, get data-driven predictions, and receive financial advice.
+-   **Financial Insights:** Advanced analysis of your financial data to identify trends and opportunities for improvement.
 
-## Tampilan Proyek (Screenshots)
+## Screenshots
 
-Berikut adalah beberapa tampilan dari aplikasi PFM:
+Here are some screenshots of the PFM application:
 
 ### Dashboard
-![Tampilan Dashboard PFM](assets/dashboard.jpg)
+![PFM Dashboard Screenshot](https://raw.githubusercontent.com/jayabaya-studio/pfm-finance-app/main/assets/dashboard.jpg)
 
-### Fitur Family Space
-![Tampilan Fitur Family Spaces](assets/family_spaces.jpg)
+### Family Space Feature
+![Family Spaces Feature Screenshot](https://raw.githubusercontent.com/jayabaya-studio/pfm-finance-app/main/assets/family_spaces.jpg)
 
-## Teknologi yang Digunakan
+## Tech Stack
 
 -   **Backend:** PHP (Laravel 11)
 -   **Frontend:** Tailwind CSS, Alpine.js
--   **Database:** MySQL (melalui XAMPP)
--   **Versi PHP yang disarankan:** 8.2 atau lebih tinggi
+-   **Database:** MySQL (via XAMPP)
+-   **Recommended PHP version:** 8.2 or higher
 
-## Persyaratan Sistem
+## System Requirements
 
 -   Web server (Apache/Nginx)
 -   PHP 8.2+
 -   MySQL Database
 -   Composer
--   Node.js & NPM/Yarn (untuk aset frontend)
+-   Node.js & NPM/Yarn (for frontend assets)
 
-## Panduan Instalasi (Lokal)
+## Local Installation Guide
 
-Ikuti langkah-langkah di bawah ini untuk menjalankan proyek secara lokal:
+Follow the steps below to run the project locally:
 
-1.  **Clone repositori:**
+1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/jayabaya-studio/pfm-finance-app.git](https://github.com/jayabaya-studio/pfm-finance-app.git)
+    git clone https://github.com/jayabaya-studio/pfm-finance-app.git
     cd pfm-finance-app
     ```
-2.  **Instal dependensi Composer:**
+2.  **Install Composer dependencies:**
     ```bash
     composer install
     ```
-3.  **Buat file .env dan generate app key:**
+3.  **Create the .env file and generate the app key:**
     ```bash
     cp .env.example .env
     php artisan key:generate
     ```
-4.  **Konfigurasi database:**
-    Buka file `.env` dan konfigurasikan detail database Anda (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
-5.  **Jalankan migrasi database:**
+4.  **Configure your database:**
+    Open the `.env` file and configure your database details (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
+
+5.  **Configure Gemini AI:**
+    Add your Gemini API Key to the `.env` file. You can get it from Google AI Studio.
+    ```env
+    GEMINI_API_KEY=your_api_key_here
+    ```
+
+6.  **Run the database migrations:**
     ```bash
     php artisan migrate
     ```
-6.  **Instal dependensi Node.js & Compile aset frontend:**
+7.  **Install Node.js dependencies & Compile frontend assets:**
     ```bash
     npm install
-    npm run dev  # atau npm run build untuk produksi
+    npm run dev  # or npm run build for production
     ```
-7.  **Jalankan server pengembangan Laravel:**
+8.  **Run the Laravel development server:**
     ```bash
     php artisan serve
     ```
-    Aplikasi akan tersedia di `http://127.0.0.1:8000`.
+    The application will be available at `http://127.0.0.1:8000`.
 
-## Kontribusi
+## Contributing
 
-Kontribusi disambut baik! Jika Anda menemukan bug atau memiliki saran fitur, silakan buka masalah atau kirim *pull request*.
+Contributions are welcome! If you find a bug or have a feature suggestion, please open an issue or submit a pull request.
 
-## Lisensi
+## License
 
-Proyek ini dilisensikan di bawah Lisensi MIT. Lihat file `LICENSE` untuk detail lebih lanjut.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
-## Dukungan Proyek
+## Support the Project
 
-Jika proyek ini membantu Anda, Anda dapat mempertimbangkan untuk mendukungnya:
--   Beli saya kopi: [https://www.buymeacoffee.com/fathurrochim)
+If this project helps you, you can consider supporting it:
 
 ---
-*Dibuat dengan ❤️ oleh Fathur Rochim*
+*Made with love by Fathur Rochim*

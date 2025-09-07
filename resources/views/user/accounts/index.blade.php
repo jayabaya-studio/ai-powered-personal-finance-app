@@ -35,7 +35,7 @@
         $watch('showEditModal', value => { if (!value) cleanupState() });
         $watch('showDeleteModal', value => { if (!value) cleanupState() });
     ">
-        <!-- Header Halaman -->
+        <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <h1 class="text-3xl font-bold text-white">Your Accounts</h1>
             <x-button @click="openAddModal()">
@@ -43,7 +43,6 @@
             </x-button>
         </div>
 
-        <!-- Notifikasi -->
         @if (session('success'))
             <div x-data="{ show: true }" x-show="show" x-transition.opacity.duration.500ms x-init="setTimeout(() => show = false, 5000)"
                 class="bg-green-500/20 border border-green-500 text-green-300 px-4 py-3 rounded-lg relative mb-6">
@@ -67,7 +66,6 @@
             </div>
         @endif
 
-        <!-- Daftar Akun -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse ($accounts as $account)
                 <x-card-glass class="relative overflow-hidden">
@@ -94,8 +92,6 @@
             @endforelse
         </div>
 
-        <!-- Modal Tambah Rekening -->
-        {{-- Menambahkan form_type hidden input untuk identifikasi form --}}
         <x-modal show="showAddModal" title="Add New Account">
             <form action="{{ route('accounts.store') }}" method="POST" class="p-6">
                 @csrf

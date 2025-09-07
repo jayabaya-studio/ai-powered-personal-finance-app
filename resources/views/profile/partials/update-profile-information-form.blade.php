@@ -34,9 +34,7 @@
                    " />
 
             <div class="mt-2 flex items-center gap-4">
-                <!-- Foto Profil Saat Ini -->
                 <img :src="photoPreview ?? '{{ $user->profile_photo_url }}'" alt="{{ $user->name }}" class="h-20 w-20 rounded-full object-cover">
-                <!-- Tombol untuk Memilih Foto Baru -->
                 <button type="button" class="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20" x-on:click.prevent="$refs.photo.click()">
                     Change Photo
                 </button>
@@ -75,7 +73,6 @@
             @endif
         </div>
 
-        <!-- [BARU] Zona Waktu -->
         <div>
             <x-input-label for="timezone" :value="__('Timezone')" />
             <select id="timezone" name="timezone" class="mt-1 block w-full border-white/20 bg-white/5 text-gray-200 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm placeholder-gray-500">

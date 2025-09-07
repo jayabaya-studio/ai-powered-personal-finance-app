@@ -17,15 +17,11 @@
 <body class="font-sans antialiased bg-gray-800 text-gray-200">
     <div class="min-h-screen">
         <div class="flex">
-            <!-- Memanggil Sidebar untuk Admin -->
             @include('partials.sidebar-admin')
 
-            <!-- Konten Utama -->
             <main class="flex-1">
-                <!-- Memanggil Navbar Atas -->
                 @include('partials.navbar')
 
-                <!-- Konten Halaman -->
                 <div class="p-8">
                     @yield('content')
                 </div>

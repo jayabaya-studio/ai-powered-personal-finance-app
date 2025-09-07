@@ -133,14 +133,12 @@ function goalManager() {
     const oldInput = @json(session()->getOldInput());
     const formErrors = {{ $errors->any() ? 'true' : 'false' }};
     const sessionFormType = '{{ session('form_type') ?? '' }}';
-    const allGoals = @json($goals); // All goals from the controller
+    const allGoals = @json($goals);
 
     return {
-        // State to control modal visibility.
         showFormModal: false,
         showDeleteConfirmation: false,
 
-        // State for form data. All inputs will be bound to this.
         formState: {
             id: null,
             name: '',
@@ -151,7 +149,6 @@ function goalManager() {
             is_completed: false,
         },
 
-        // State for delete confirmation
         deleteState: {
             id: null,
             name: '',
@@ -159,7 +156,6 @@ function goalManager() {
         },
 
         init() {
-            // Check for edit_id in URL or validation errors on page load
             const urlParams = new URLSearchParams(window.location.search);
             const hasEditId = urlParams.has('edit_id');
             const editId = hasEditId ? parseInt(urlParams.get('edit_id')) : null;
@@ -169,7 +165,6 @@ function goalManager() {
                 if (goalToEdit) {
                     this.openEditGoalModal(goalToEdit);
                 } else if (formErrors && sessionFormType === 'edit_goal') {
-                    // Fallback: If goal object isn't found but there are edit errors, use oldInput to populate
                     this.openEditGoalModal(oldInput);
                 }
             } else if (formErrors && sessionFormType === 'add_goal') {
@@ -177,9 +172,7 @@ function goalManager() {
             }
         },
 
-        // Function to open 'Add' modal
         openAddGoalModal() {
-            // Reset formState to initial/empty conditions
             this.formState = {
                 id: null,
                 name: '',
@@ -190,7 +183,6 @@ function goalManager() {
                 is_completed: false,
             };
 
-            // If there were validation errors for an add form, re-populate from old input
             if (formErrors && sessionFormType === 'add_goal') {
                 this.formState = {
                     ...this.formState,
@@ -199,27 +191,23 @@ function goalManager() {
                     current_amount: oldInput.current_amount || '',
                     target_date: oldInput.target_date || '',
                     description: oldInput.description || '',
-                    is_completed: oldInput.is_completed === '1' || oldInput.is_completed === true, // handle checkbox value
+                    is_completed: oldInput.is_completed === '1' || oldInput.is_completed === true,
                 };
             }
             this.showFormModal = true;
         },
 
-        // Function to open 'Edit' modal
         openEditGoalModal(goal) {
-            // Populate formState with data from the selected goal
             this.formState = {
                 id: goal.id,
                 name: goal.name,
                 target_amount: goal.target_amount,
                 current_amount: goal.current_amount,
-                // Format date for input type="date"
-                target_date: goal.target_date || '', // ensure it's empty string if null
+                target_date: goal.target_date || '',
                 description: goal.description || '',
                 is_completed: goal.is_completed,
             };
 
-            // If there were validation errors for an edit form, re-populate from old input
             if (formErrors && sessionFormType === 'edit_goal' && oldInput.id == goal.id) {
                 this.formState = {
                     ...this.formState,
@@ -235,7 +223,6 @@ function goalManager() {
             this.showFormModal = true;
         },
 
-        // Function to open 'Delete' confirmation modal
         openDeleteConfirmation(id, name) {
             this.deleteState.id = id;
             this.deleteState.name = name;
@@ -243,12 +230,10 @@ function goalManager() {
             this.showDeleteConfirmation = true;
         },
 
-        // Function to close all modals and reset states
         closeModals() {
             this.showFormModal = false;
             this.showDeleteConfirmation = false;
 
-            // Reset formState to ensure clean slate for next add/edit
             this.formState = {
                 id: null,
                 name: '',
@@ -264,7 +249,6 @@ function goalManager() {
                 actionUrl: ''
             };
 
-            // Clear 'edit_id' URL parameter
             const url = new URL(window.location.href);
             if (url.searchParams.has('edit_id')) {
                 url.searchParams.delete('edit_id');

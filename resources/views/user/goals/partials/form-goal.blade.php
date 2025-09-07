@@ -1,11 +1,3 @@
-<?php
-// File: resources/views/user/goals/partials/form-goal.blade.php
-
-// This partial provides the form for adding or editing financial goals.
-// It is designed to be included within an Alpine.js x-data context (goalManager).
-// All form inputs are bound to the `formState` object in the parent context using x-model.
-//
-?>
 <form :action="formState.id ? `{{ url('goals') }}/${formState.id}` : `{{ route('goals.store') }}`"
       :method="formState.id ? 'POST' : 'POST'" {{-- Always POST for Laravel, use @method for PUT/DELETE --}}
       class="space-y-4 p-6">

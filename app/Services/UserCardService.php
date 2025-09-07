@@ -21,7 +21,6 @@ class UserCardService
 
     public function create(array $data)
     {
-        // If this new card is set as default, remove the flag from all others first.
         if (isset($data['is_default']) && $data['is_default']) {
             $this->repository->removeDefaultFlagFromAll();
         }
@@ -31,7 +30,6 @@ class UserCardService
     public function update(int $id, array $data)
     {
         DB::transaction(function () use ($id, $data) {
-            // If this card is being set as default, remove the flag from all others first.
             if (isset($data['is_default']) && $data['is_default']) {
                 $this->repository->removeDefaultFlagFromAll();
             }

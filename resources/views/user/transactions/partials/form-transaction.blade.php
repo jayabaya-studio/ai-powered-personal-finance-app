@@ -1,16 +1,3 @@
-<?php
-// File: resources/views/user/transactions/partials/form-transaction.blade.php
-//
-// Partial for Transaction Add/Edit Form.
-//
-// Props:
-// - $accounts: List of user accounts for dropdown.
-// - $categories: List of user categories for dropdown.
-// - $goals: List of user goals for dropdown. (NEW)
-//
-// All form inputs are bound to the `formState` object in the parent context (transactionsManager) using x-model.
-//
-?>
 @props(['accounts', 'categories', 'goals']) {{-- Add goals to props --}}
 
 <form :action="formState.id ? `{{ url('transactions') }}/${formState.id}` : `{{ route('transactions.store') }}`"

@@ -9,8 +9,6 @@ class StoreGoalRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Untuk saat ini, kita akan mengizinkan semua permintaan yang diautentikasi.
-        // Logika otorisasi yang lebih kompleks dapat ditambahkan di sini jika diperlukan.
         return auth()->check();
     }
 
@@ -19,10 +17,9 @@ class StoreGoalRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'target_amount' => 'required|numeric|min:0.01',
-            'current_amount' => 'nullable|numeric|min:0', // Dapat diisi awal atau dibiarkan kosong
-            'target_date' => 'nullable|date|after_or_equal:today', // Tanggal target harus hari ini atau setelahnya
+            'current_amount' => 'nullable|numeric|min:0',
+            'target_date' => 'nullable|date|after_or_equal:today',
             'description' => 'nullable|string|max:1000',
-            // 'is_completed' tidak disertakan dalam validasi ini karena akan dikelola oleh logika aplikasi
         ];
     }
 

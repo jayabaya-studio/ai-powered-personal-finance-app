@@ -12,8 +12,8 @@ class StoreCategoryRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'type' => ['required', Rule::in(['income', 'expense'])],
-            'parent_id' => 'nullable|exists:categories,id,user_id,' . auth()->id(), // Tambah validasi user_id
-            'icon' => 'nullable|string|max:50', // Tambah validasi untuk icon
+            'parent_id' => 'nullable|exists:categories,id,user_id,' . auth()->id(),
+            'icon' => 'nullable|string|max:50',
         ];
     }
 

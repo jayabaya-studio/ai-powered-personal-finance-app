@@ -11,23 +11,10 @@ use Carbon\Carbon;
 
 class ProcessRecurringTransactions extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'app:process-recurring-transactions';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Process due recurring transactions and create standard transactions.';
 
-    /**
-     * Execute the console command.
-     */
     public function handle(RecurringTransactionRepository $recurringRepo, TransactionService $transactionService)
     {
         $this->info('Starting to process recurring transactions...');

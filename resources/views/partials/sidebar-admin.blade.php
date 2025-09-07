@@ -1,4 +1,3 @@
-<!-- Sidebar untuk Admin -->
 <aside class="w-64 h-screen bg-gray-900/50 backdrop-blur-xl border-r border-white/10 flex flex-col">
     <!-- Logo -->
     <div class="h-16 flex items-center px-6 border-b border-white/10">

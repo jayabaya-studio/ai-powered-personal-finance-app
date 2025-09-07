@@ -1,16 +1,11 @@
-<!-- Canvas element where the 3D scene will be rendered -->
 <div id="orb-container" class="relative w-full h-96 cursor-grab"></div>
-<!-- Tooltip for hover effect -->
 <div id="chart-tooltip" class="absolute bg-gray-700 text-white text-xs p-2 rounded shadow-lg pointer-events-none opacity-0 transition-opacity duration-200 z-50"></div>
-<!-- Legenda untuk kategori pengeluaran -->
 <div id="orb-legend" class="mt-4 p-4 bg-gray-800/50 backdrop-blur-xl border border-white/10 rounded-lg text-white">
     <h4 class="text-lg font-semibold mb-2">Monthly Financial Summary</h4>
     <ul class="space-y-1">
-        <!-- Legend items will be dynamically added here -->
     </ul>
 </div>
 
-{{-- Hapus baris ini jika Three.js sudah dimuat di app.blade.php --}}
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> --}}
 
 <script>
@@ -18,7 +13,6 @@
     const legendContainer = document.getElementById('orb-legend').querySelector('ul');
     const tooltip = document.getElementById('chart-tooltip');
 
-    // Pastikan THREE.js dimuat
     if (typeof THREE === 'undefined') {
         console.error('THREE.js is not loaded. Please ensure the script tag is correct in your main layout.');
         if (container) {

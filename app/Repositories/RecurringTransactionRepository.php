@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class RecurringTransactionRepository
 {
-    /**
-     * Get all recurring transactions for the authenticated user.
-     */
     public function getAllByUser(): Collection
     {
         return RecurringTransaction::where('user_id', Auth::id())
@@ -20,9 +17,6 @@ class RecurringTransactionRepository
             ->get();
     }
 
-    /**
-     * [NEW] Get all active recurring transactions that are due.
-     */
     public function getDueTransactions(): Collection
     {
         return RecurringTransaction::where('is_active', true)

@@ -9,11 +9,10 @@ class TransactionRepository
 {
     public function getAllByUserPaginated(int $perPage = 15)
     {
-        // Pastikan eager load 'goal' ditambahkan di sini untuk mengurangi query N+1
         return Transaction::where('user_id', Auth::id())
             ->with(['category', 'account', 'transferToAccount', 'goal'])
-            ->latest('transaction_date') // Order by latest transaction date
-            ->paginate($perPage); // <-- Ini yang krusial untuk paginasi
+            ->latest('transaction_date')
+            ->paginate($perPage);
     }
 
     public function create(array $data): Transaction

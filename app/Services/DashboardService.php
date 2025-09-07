@@ -1,22 +1,15 @@
 <?php
-// File: app/Services/DashboardService.php
 
 namespace App\Services;
 
 use App\Models\Transaction;
-use App\Models\Budget; // [BARU] Menambahkan model Budget
+use App\Models\Budget;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
 class DashboardService
 {
-    /**
-     * Get monthly financial summary for the last N months.
-     *
-     * @param int $monthsToShow
-     * @return Collection
-     */
     public function getMonthlyFinancialSummary(int $monthsToShow = 6): Collection
     {
         $userId = Auth::id();
@@ -48,12 +41,6 @@ class DashboardService
         return $results;
     }
 
-    /**
-     * Get recent transactions for the user.
-     *
-     * @param int $limit
-     * @return Collection
-     */
     public function getRecentTransactions(int $limit = 5): Collection
     {
         return Transaction::where('user_id', Auth::id())
@@ -63,15 +50,8 @@ class DashboardService
             ->get();
     }
 
-    /**
-     * [FIXED] Get the top spending categories for the current month.
-     *
-     * @param int $limit
-     * @return Collection
-     */
     public function getTopSpendingCategories(int $limit = 3): Collection
     {
-        // [FIXED] Specify the table name for user_id to resolve ambiguity
         return Transaction::where('transactions.user_id', Auth::id())
             ->where('transactions.type', 'expense')
             ->whereMonth('transactions.transaction_date', now()->month)
@@ -84,11 +64,6 @@ class DashboardService
             ->get();
     }
 
-    /**
-     * Get the net cash flow for the current month.
-     *
-     * @return array
-     */
     public function getMonthlyCashFlow(): array
     {
         $userId = Auth::id();
@@ -112,27 +87,17 @@ class DashboardService
         ];
     }
 
-    // --- FUNGSI BARU UNTUK FINANCIAL INSIGHTS ---
-
-    /**
-     * [BARU] Mengambil progres budget bulanan dibandingkan dengan pengeluaran.
-     *
-     * @param int $limit
-     * @return Collection
-     */
     public function getBudgetProgress(int $limit = 4): Collection
     {
         $userId = Auth::id();
         $currentMonth = now()->month;
         $currentYear = now()->year;
 
-        // 1. Ambil semua budget bulanan untuk pengguna saat ini
         $budgets = Budget::where('user_id', $userId)
             ->where('period', 'monthly')
-            ->with('category') // Eager load relasi kategori
+            ->with('category')
             ->get();
 
-        // 2. Ambil semua total pengeluaran per kategori untuk bulan ini
         $expenses = Transaction::where('user_id', $userId)
             ->where('type', 'expense')
             ->whereMonth('transaction_date', $currentMonth)
@@ -141,7 +106,6 @@ class DashboardService
             ->select('category_id', DB::raw('SUM(amount) as total_spent'))
             ->pluck('total_spent', 'category_id');
 
-        // 3. Proses dan gabungkan data
         $budgetProgress = $budgets->map(function ($budget) use ($expenses) {
             $spent = $expenses->get($budget->category_id, 0);
             $budgetAmount = $budget->amount;
@@ -156,23 +120,15 @@ class DashboardService
             ];
         });
 
-        // Urutkan berdasarkan persentase tertinggi dan ambil sesuai limit
         return $budgetProgress->sortByDesc('percentage')->take($limit);
     }
 
-    /**
-     * [BARU] Menghitung metrik kesehatan finansial seperti Savings Rate.
-     *
-     * @return array
-     */
     public function getFinancialHealthMetrics(): array
     {
         $cashFlow = $this->getMonthlyCashFlow();
         $income = $cashFlow['income'];
         $expense = $cashFlow['expense'];
 
-        // Hitung Savings Rate: (Pemasukan - Pengeluaran) / Pemasukan
-        // Hindari pembagian dengan nol jika tidak ada pemasukan
         $savingsRate = ($income > 0) ? (($income - $expense) / $income) * 100 : 0;
 
         return [

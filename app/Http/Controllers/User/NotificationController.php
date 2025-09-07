@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
-    /**
-     * Fetch the user's unread notifications.
-     */
     public function index()
     {
         $user = Auth::user();
@@ -23,9 +20,6 @@ class NotificationController extends Controller
         ]);
     }
 
-    /**
-     * Mark a specific notification as read.
-     */
     public function markAsRead(string $id)
     {
         $user = Auth::user();

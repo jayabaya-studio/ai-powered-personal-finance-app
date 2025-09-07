@@ -1,11 +1,3 @@
-{{--
-    Sidebar for Users (Upgraded & Troubleshooted Version)
-    - Fixes mobile functionality (auto-close on link click).
-    - Implements a futuristic design with active indicators and hover effects.
-    - Groups menu items for better organization.
-
-    IMPORTANT: This component requires Alpine.js to be loaded and initialized in your main layout file (e.g., app.blade.php).
---}}
 <aside x-data="{ open: false }"
        @keydown.window.escape="open = false"
        @open-sidebar.window="open = true"
@@ -30,7 +22,6 @@
         </button>
     </div>
 
-    <!-- Navigation Menu -->
     <nav class="flex-1 p-4 space-y-4 overflow-y-auto">
         {{-- Main Menu --}}
         <a href="{{ route('dashboard') }}" @click="open = false"

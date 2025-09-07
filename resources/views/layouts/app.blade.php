@@ -58,9 +58,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // [PERBAIKAN PERFORMA]
-            // Hanya jalankan efek salju di perangkat desktop (lebar > 768px)
-            // untuk menghindari lag dan konsumsi baterai di mobile.
             if (window.innerWidth >= 768) {
                 const snowContainer = document.getElementById('snow-container');
                 if (!snowContainer) return;

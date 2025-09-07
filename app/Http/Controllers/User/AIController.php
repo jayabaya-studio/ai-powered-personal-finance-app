@@ -25,8 +25,6 @@ class AIController extends Controller
         try {
             $answer = $this->aiService->getAnalysis($request->input('question'));
 
-            // Konversi jawaban (yang mungkin dalam format Markdown) ke HTML
-            // agar bisa dirender dengan benar oleh x-html di frontend.
             $formattedAnswer = \Illuminate\Support\Str::markdown($answer);
 
             return response()->json(['answer' => $formattedAnswer]);
@@ -35,7 +33,7 @@ class AIController extends Controller
             Log::error('AI Analysis Service failed: ' . $e->getMessage());
 
             return response()->json([
-                'error' => '⚠️ Maaf, sistem sedang bermasalah. Coba lagi nanti.'
+                'error' => '⚠️ Sorry, the system is having problems. Please try again later.''
             ], 500);
         }
     }

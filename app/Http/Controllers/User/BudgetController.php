@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreBudgetRequest; // Kita akan buat file ini
+use App\Http\Requests\StoreBudgetRequest;
 use App\Services\BudgetService;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;

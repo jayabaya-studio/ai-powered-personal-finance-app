@@ -39,7 +39,6 @@
     @endif
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <!-- Kode daftar anggota -->
         <div>
             <x-card-glass>
                 <h3 class="text-xl font-semibold text-white mb-4">Members ({{ $family->members->count() }})</h3>
@@ -70,7 +69,6 @@
             </x-card-glass>
         </div>
 
-        <!-- Kode daftar akun bersama -->
         <div>
             <x-card-glass>
                 <h3 class="text-xl font-semibold text-white mb-4">Joint Accounts ({{ $jointAccounts->count() }})</h3>
@@ -131,18 +129,15 @@ function familyShowManager() {
     const oldFormType = @json(old('form_type'));
 
     return {
-        // State untuk mengontrol visibilitas setiap modal
         showEditModal: errors && oldFormType === 'edit_family',
         showInviteModal: errors && oldFormType === 'invite_member',
         showCreateJointAccountModal: errors && oldFormType === 'create_joint_account',
         showRemoveMemberConfirmation: false,
 
-        // State untuk data modal konfirmasi hapus
         removeMemberId: null,
         removeMemberName: '',
         removeMemberBaseUrl: @json(route('families.remove-member', ['family' => $family, 'member' => 'MEMBER_ID_PLACEHOLDER'])),
 
-        // Fungsi untuk membuka modal dengan mengubah state
         openEditFamilyModal() {
             this.showEditModal = true;
         },

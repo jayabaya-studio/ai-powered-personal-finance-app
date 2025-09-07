@@ -1,5 +1,4 @@
 <?php
-// File: app/Models/User.php
 
 namespace App\Models;
 
@@ -18,18 +17,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use HasFactory, Notifiable, Authenticatable, Authorizable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
         'role',
         'current_family_id',
-        // [BARU] Menambahkan kolom profil profesional
         'profile_photo_path',
         'timezone',
         'payday',
@@ -37,46 +30,25 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'location',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    /**
-     * [BARU] Accessor untuk mendapatkan URL foto profil.
-     *
-     * @return string
-     */
     public function getProfilePhotoUrlAttribute()
     {
         if ($this->profile_photo_path) {
             return Storage::url($this->profile_photo_path);
         }
 
-        // Mengembalikan URL default jika tidak ada foto profil
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
     }
 
-    // --- Relasi ---
-
-    /**
-     * [BARU] Relasi ke kartu pengguna.
-     */
     public function cards(): HasMany
     {
         return $this->hasMany(UserCard::class);
@@ -118,8 +90,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->belongsTo(Family::class, 'current_family_id');
     }
-
-    // --- Fungsi Bantuan ---
 
     public function ownsFamilySpace(Family $family): bool
     {

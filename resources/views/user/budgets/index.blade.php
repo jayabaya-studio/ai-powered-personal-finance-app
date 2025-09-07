@@ -106,16 +106,13 @@ function budgetManager() {
     const sessionFormType = '{{ session('form_type') ?? '' }}';
 
     return {
-        // [FIXED] Use a state variable to control the modal
         showAddModal: false,
-        // [FIXED] formState to hold form data
         formState: {
             category_id: '',
             amount: '',
         },
 
         init() {
-            // [FIXED] Logic to re-open modal on validation error
             if (formErrors && sessionFormType === 'add_budget') {
                 this.formState.category_id = oldInput.category_id || '';
                 this.formState.amount = oldInput.amount || '';
@@ -124,7 +121,6 @@ function budgetManager() {
         },
 
         openAddModal() {
-            // Reset form state before opening
             this.formState.category_id = '';
             this.formState.amount = '';
             this.showAddModal = true;
@@ -132,7 +128,6 @@ function budgetManager() {
 
         handleModalClose(event) {
             if (event.detail === 'add-budget-modal') {
-                // Selalu reset formState saat modal ditutup untuk membersihkan isian form
                 this.formState.category_id = '';
                 this.formState.amount = '';
             }

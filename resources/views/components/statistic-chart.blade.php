@@ -10,17 +10,14 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Ambil data dari Blade dan ubah menjadi format yang bisa dibaca JavaScript
     const chartData = @json($chartData);
 
-    // Siapkan label (bulan) dan dataset (pemasukan & pengeluaran)
     const labels = chartData.map(item => item.month);
     const incomeData = chartData.map(item => item.income);
     const expenseData = chartData.map(item => item.expense);
 
     const ctx = document.getElementById('statisticChart').getContext('2d');
 
-    // Buat gradasi warna untuk area di bawah garis
     const incomeGradient = ctx.createLinearGradient(0, 0, 0, 300);
     incomeGradient.addColorStop(0, 'rgba(75, 192, 192, 0.5)');
     incomeGradient.addColorStop(1, 'rgba(75, 192, 192, 0)');
@@ -39,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     data: incomeData,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: incomeGradient,
-                    tension: 0.4, // Membuat garis melengkung halus
+                    tension: 0.4,
                     fill: true,
                     pointBackgroundColor: 'rgba(75, 192, 192, 1)',
                     pointBorderColor: '#fff',
@@ -69,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        color: 'rgba(255, 255, 255, 0.7)', // Warna teks sumbu Y
+                        color: 'rgba(255, 255, 255, 0.7)',
                         callback: function(value) {
                             // Format angka menjadi lebih singkat (e.g., 1000 -> 1k)
                             if (value >= 1000000) return (value / 1000000) + 'M';
@@ -78,15 +75,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)' // Warna garis grid
+                        color: 'rgba(255, 255, 255, 0.1)'
                     }
                 },
                 x: {
                     ticks: {
-                        color: 'rgba(255, 255, 255, 0.7)' // Warna teks sumbu X
+                        color: 'rgba(255, 255, 255, 0.7)'
                     },
                     grid: {
-                        display: false // Sembunyikan grid vertikal
+                        display: false
                     }
                 }
             },
@@ -94,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 legend: {
                     position: 'top',
                     labels: {
-                        color: 'rgba(255, 255, 255, 0.9)', // Warna teks legenda
+                        color: 'rgba(255, 255, 255, 0.9)',
                         font: {
                             size: 14
                         }
@@ -111,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                 label += ': ';
                             }
                             if (context.parsed.y !== null) {
-                                // Format tooltip dengan format mata uang
                                 label += new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(context.parsed.y);
                             }
                             return label;

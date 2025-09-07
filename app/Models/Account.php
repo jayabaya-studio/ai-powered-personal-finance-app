@@ -16,13 +16,13 @@ class Account extends Model
             'name',
             'type',
             'balance',
-            'family_space_id', // Tambahkan ini
-            'is_joint',        // Tambahkan ini
+            'family_space_id',
+            'is_joint',
         ];
 
         protected $casts = [
             'balance' => 'decimal:2',
-            'is_joint' => 'boolean', // Cast to boolean
+            'is_joint' => 'boolean',
         ];
 
         public function user(): BelongsTo
@@ -30,7 +30,6 @@ class Account extends Model
             return $this->belongsTo(User::class);
         }
 
-        // Relasi ke FamilySpace jika ini adalah joint account
         public function familySpace(): BelongsTo
         {
             return $this->belongsTo(Family::class, 'family_space_id');

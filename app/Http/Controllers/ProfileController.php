@@ -29,21 +29,16 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        // Mengisi model pengguna dengan data yang divalidasi (nama, email, dll.)
         $user->fill($request->validated());
 
-        // Menangani logika verifikasi email
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
-        // [BARU] Menangani unggah foto profil
         if ($request->hasFile('profile_photo')) {
-            // Hapus foto lama jika ada
             if ($user->profile_photo_path) {
                 Storage::disk('public')->delete($user->profile_photo_path);
             }
-            // Simpan foto baru dan perbarui path
             $path = $request->file('profile_photo')->store('profile-photos', 'public');
             $user->profile_photo_path = $path;
         }
@@ -64,7 +59,6 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        // [BARU] Hapus foto profil dari storage saat akun dihapus
         if ($user->profile_photo_path) {
             Storage::disk('public')->delete($user->profile_photo_path);
         }
