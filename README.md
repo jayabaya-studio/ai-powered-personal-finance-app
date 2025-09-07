@@ -22,10 +22,10 @@ This is a simple, intuitive, and user-friendly Personal Finance Management (PFM)
 Here are some screenshots of the PFM application:
 
 ### Dashboard
-![PFM Dashboard Screenshot](https://raw.githubusercontent.com/jayabaya-studio/pfm-finance-app/main/assets/dashboard.jpg)
+![PFM Dashboard Screenshot](https://raw.githubusercontent.com/jayabaya-studio/ai-powered-personal-finance-app/main/assets/dashboard.jpg)
 
 ### Family Space Feature
-![Family Spaces Feature Screenshot](https://raw.githubusercontent.com/jayabaya-studio/pfm-finance-app/main/assets/family_spaces.jpg)
+![Family Spaces Feature Screenshot](https://raw.githubusercontent.com/jayabaya-studio/ai-powered-personal-finance-app/main/assets/family_spaces.jpg)
 
 ## Tech Stack
 
