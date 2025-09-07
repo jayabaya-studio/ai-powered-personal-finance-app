@@ -1,0 +1,34 @@
+<?php
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class StoreCategoryRequest extends FormRequest
+{
+    public function authorize(): bool { return true; }
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'type' => ['required', Rule::in(['income', 'expense'])],
+            'parent_id' => 'nullable|exists:categories,id,user_id,' . auth()->id(), // Tambah validasi user_id
+            'icon' => 'nullable|string|max:50', // Tambah validasi untuk icon
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Nama kategori wajib diisi.',
+            'name.string' => 'Nama kategori harus berupa teks.',
+            'name.max' => 'Nama kategori tidak boleh lebih dari 255 karakter.',
+            'type.required' => 'Tipe kategori wajib diisi (Pemasukan atau Pengeluaran).',
+            'type.in' => 'Tipe kategori tidak valid.',
+            'parent_id.exists' => 'Kategori induk yang dipilih tidak valid.',
+            'parent_id.nullable' => 'Kategori induk tidak wajib diisi.',
+            'icon.string' => 'Icon harus berupa teks.',
+            'icon.max' => 'Icon tidak boleh lebih dari 50 karakter.',
+        ];
+    }
+}

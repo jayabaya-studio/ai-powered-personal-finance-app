@@ -1,0 +1,99 @@
+<div class="flex flex-col h-full">
+    <!-- Chatbox -->
+    <div id="chat-box" class="flex-1 overflow-y-auto space-y-2 mb-2 p-2 border rounded bg-gray-50">
+        <!-- Riwayat akan di-load dari localStorage -->
+    </div>
+
+    <!-- Input -->
+    <form id="chat-form" class="mt-auto flex gap-2">
+        @csrf
+        <input type="text" id="chat-input" name="question" placeholder="Ketik pesan..."
+            class="flex-1 border rounded-lg p-2 text-sm text-gray-900 placeholder-gray-400 bg-white" required>
+        <button type="submit"
+            class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm">Kirim</button>
+    </form>
+
+    <!-- Tombol Clear -->
+    <button id="clear-chat" class="mt-2 text-xs text-red-500">Clear</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+    const chatBox = document.getElementById('chat-box');
+    const clearBtn = document.getElementById('clear-chat');
+
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function renderMessages() {
+        chatBox.innerHTML = '';
+        const messages = JSON.parse(localStorage.getItem('ai_chat') || '[]');
+        messages.forEach(m => {
+            const div = document.createElement('div');
+            div.className = `p-2 rounded-lg text-sm max-w-[75%] break-words 
+                ${m.sender === 'user' ? 'bg-blue-100 ml-auto text-right text-gray-900' : 'bg-gray-100 mr-auto text-left text-gray-900'}`;
+            div.innerHTML = m.text;
+            chatBox.appendChild(div);
+        });
+        scrollToBottom();
+    }
+
+    function saveMessage(sender, text) {
+        const messages = JSON.parse(localStorage.getItem('ai_chat') || '[]');
+        messages.push({ sender, text });
+        localStorage.setItem('ai_chat', JSON.stringify(messages));
+        renderMessages();
+    }
+
+    // initial render
+    renderMessages();
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const question = input.value.trim();
+        if (!question) return;
+
+        // pesan user
+        saveMessage('user', question);
+        input.value = '';
+
+        // loading
+        saveMessage('ai', '<span class="loading-dots">AI sedang mengetik<span>.</span><span>.</span><span>.</span></span>');
+
+        try {
+            const response = await fetch("{{ route('ai.analyze') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ question })
+            });
+
+            const data = await response.json();
+
+            // hapus loading & tampilkan jawaban
+            let messages = JSON.parse(localStorage.getItem('ai_chat') || '[]');
+            messages = messages.filter(m => !m.text.includes('AI sedang mengetik'));
+            messages.push({ sender: 'ai', text: data.answer ?? '⚠️ Tidak ada jawaban' });
+            localStorage.setItem('ai_chat', JSON.stringify(messages));
+            renderMessages();
+        } catch (error) {
+            let messages = JSON.parse(localStorage.getItem('ai_chat') || '[]');
+            messages = messages.filter(m => !m.text.includes('AI sedang mengetik'));
+            messages.push({ sender: 'ai', text: '⚠️ Gagal terhubung ke server' });
+            localStorage.setItem('ai_chat', JSON.stringify(messages));
+            renderMessages();
+        }
+    });
+
+    clearBtn.addEventListener('click', () => {
+        localStorage.removeItem('ai_chat');
+        renderMessages();
+    });
+});
+</script>
